@@ -3,6 +3,8 @@ import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 
+let userIdCounter = 1;
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -26,7 +28,10 @@ export const {
 
         console.log('🚀  credentials:', credentials);
         const { email } = credentials;
-        const user = { id: '1', email, name: 'Hong' } as User;
+        const user = {
+          id: String(userIdCounter++),
+          email: email,
+        } as User;
         return user;
       },
     }),

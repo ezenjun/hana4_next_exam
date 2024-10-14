@@ -15,12 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
-        <SessionProvider>
+      <SessionProvider>
+        <body className='flex flex-col w-screen h-screen bg-blue-50'>
           <Header />
           {children}
-        </SessionProvider>
-      </body>
+        </body>
+      </SessionProvider>
     </html>
   );
 }

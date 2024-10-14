@@ -1,101 +1,202 @@
-import Image from 'next/image';
+import RecipeCard from '@/components/RecipeCard';
+// import { Recipe } from '@/types/recipe';
+import { auth } from '@/lib/auth';
 
-export default function Home() {
+// import { getRecipes } from '@/lib/localStorage';
+
+export default async function HomePage() {
+  const session = await auth();
+  if (!session || !session.user?.email)
+    return (
+      <div className='flex flex-col h-full justify-center items-center p-4 gap-3 border-2 text-2xl'>
+        레시피를 확인하려면 로그인해주세요
+      </div>
+    );
+
+  // const recipes = getRecipes(session.user?.email);
+  // console.log('recipes', recipes);
+
+  const recipes = [
+    {
+      id: '1',
+      title: 'Spaghetti Bolognese',
+      tags: ['pasta', 'italian'],
+      ingredients: [
+        'spaghetti',
+        'ground beef',
+        'tomato sauce',
+        'onion',
+        'garlic',
+      ],
+      steps: [
+        'Boil spaghetti according to package instructions.',
+        'Cook ground beef in a pan until browned.',
+        'Add onion and garlic, cook until soft.',
+        'Stir in tomato sauce and simmer for 10 minutes.',
+      ],
+      versions: [],
+    },
+    {
+      id: '2',
+      title: 'Chicken Curry',
+      tags: ['curry', 'spicy'],
+      ingredients: [
+        'chicken breast',
+        'curry powder',
+        'coconut milk',
+        'onion',
+        'bell pepper',
+      ],
+      steps: [
+        'Cut chicken into cubes.',
+        'Cook onion and bell pepper in a pan until soft.',
+        'Add chicken and curry powder, cook until chicken is done.',
+        'Pour in coconut milk and simmer for 20 minutes.',
+      ],
+      versions: [],
+    },
+    {
+      id: '3',
+      title: 'Caesar Salad',
+      tags: ['salad', 'healthy'],
+      ingredients: [
+        'romaine lettuce',
+        'croutons',
+        'parmesan cheese',
+        'Caesar dressing',
+      ],
+      steps: [
+        'Chop romaine lettuce into bite-sized pieces.',
+        'Toss lettuce with Caesar dressing.',
+        'Top with croutons and parmesan cheese.',
+      ],
+      versions: [],
+    },
+    {
+      id: '4',
+      title: 'Pancakes',
+      tags: ['breakfast', 'sweet'],
+      ingredients: ['flour', 'milk', 'egg', 'sugar', 'baking powder'],
+      steps: [
+        'Mix flour, sugar, and baking powder in a bowl.',
+        'Add milk and egg, whisk until smooth.',
+        'Pour batter onto a hot griddle and cook until bubbles form.',
+        'Flip and cook the other side until golden brown.',
+      ],
+      versions: [],
+    },
+    {
+      id: '5',
+      title: 'Grilled Cheese Sandwich',
+      tags: ['sandwich', 'cheese'],
+      ingredients: ['bread', 'cheddar cheese', 'butter'],
+      steps: [
+        'Butter one side of each bread slice.',
+        'Place cheese between two slices, buttered sides out.',
+        'Grill on a pan until golden brown on both sides.',
+      ],
+      versions: [],
+    },
+    {
+      id: '6',
+      title: 'Spaghetti Bolognese',
+      tags: ['pasta', 'italian'],
+      ingredients: [
+        'spaghetti',
+        'ground beef',
+        'tomato sauce',
+        'onion',
+        'garlic',
+      ],
+      steps: [
+        'Boil spaghetti according to package instructions.',
+        'Cook ground beef in a pan until browned.',
+        'Add onion and garlic, cook until soft.',
+        'Stir in tomato sauce and simmer for 10 minutes.',
+      ],
+      versions: [],
+    },
+    {
+      id: '7',
+      title: 'Chicken Curry',
+      tags: ['curry', 'spicy'],
+      ingredients: [
+        'chicken breast',
+        'curry powder',
+        'coconut milk',
+        'onion',
+        'bell pepper',
+      ],
+      steps: [
+        'Cut chicken into cubes.',
+        'Cook onion and bell pepper in a pan until soft.',
+        'Add chicken and curry powder, cook until chicken is done.',
+        'Pour in coconut milk and simmer for 20 minutes.',
+      ],
+      versions: [],
+    },
+    {
+      id: '8',
+      title: 'Caesar Salad',
+      tags: ['salad', 'healthy'],
+      ingredients: [
+        'romaine lettuce',
+        'croutons',
+        'parmesan cheese',
+        'Caesar dressing',
+      ],
+      steps: [
+        'Chop romaine lettuce into bite-sized pieces.',
+        'Toss lettuce with Caesar dressing.',
+        'Top with croutons and parmesan cheese.',
+      ],
+      versions: [],
+    },
+    {
+      id: '9',
+      title: 'Pancakes',
+      tags: ['breakfast', 'sweet'],
+      ingredients: ['flour', 'milk', 'egg', 'sugar', 'baking powder'],
+      steps: [
+        'Mix flour, sugar, and baking powder in a bowl.',
+        'Add milk and egg, whisk until smooth.',
+        'Pour batter onto a hot griddle and cook until bubbles form.',
+        'Flip and cook the other side until golden brown.',
+      ],
+      versions: [],
+    },
+    {
+      id: '10',
+      title: 'Grilled Cheese Sandwich',
+      tags: ['sandwich', 'cheese'],
+      ingredients: ['bread', 'cheddar cheese', 'butter'],
+      steps: [
+        'Butter one side of each bread slice.',
+        'Place cheese between two slices, buttered sides out.',
+        'Grill on a pan until golden brown on both sides.',
+      ],
+      versions: [],
+    },
+  ];
+  // const recipes = [] as Recipe[];
+
   return (
-    <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
-      <main className='flex flex-col gap-8 row-start-2 items-center sm:items-start'>
-        <Image
-          className='dark:invert'
-          src='https://nextjs.org/icons/next.svg'
-          alt='Next.js logo'
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className='list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]'>
-          <li className='mb-2'>
-            Get started by editing{' '}
-            <code className='bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold'>
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className='flex gap-4 items-center flex-col sm:flex-row'>
-          <a
-            className='rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5'
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <Image
-              className='dark:invert'
-              src='https://nextjs.org/icons/vercel.svg'
-              alt='Vercel logomark'
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className='rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44'
-            href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Read our docs
-          </a>
+    <div className='flex h-full justify-center overflow-y-hidden '>
+      <div className='p-4 w-2/3 overflow-y-scroll no-scrollbar'>
+        <div className='flex flex-wrap gap-3 '>
+          {recipes.length ? (
+            recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))
+          ) : (
+            <div className='flex h-full items-center'>
+              <h2 className='text-center items-center text-xl font-semibqold'>
+                아직 저장한 레시피가 없어요.
+              </h2>
+            </div>
+          )}
         </div>
-      </main>
-      <footer className='row-start-3 flex gap-6 flex-wrap items-center justify-center'>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <Image
-            aria-hidden
-            src='https://nextjs.org/icons/file.svg'
-            alt='File icon'
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <Image
-            aria-hidden
-            src='https://nextjs.org/icons/window.svg'
-            alt='Window icon'
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <Image
-            aria-hidden
-            src='https://nextjs.org/icons/globe.svg'
-            alt='Globe icon'
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }

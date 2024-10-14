@@ -8,7 +8,7 @@ export default async function Header() {
   return (
     <header className='flex justify-between items-center p-4 bg-white shadow-md'>
       <div className='logo'>
-        <Link href='/home' className='text-xl font-bold'>
+        <Link href='/' className='text-xl font-bold'>
           나만의 레시피
         </Link>
       </div>
