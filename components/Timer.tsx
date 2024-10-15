@@ -23,20 +23,18 @@ const Timer = () => {
   const toggleTimer = () => {
     if (!isRunning) {
       if (inputRef.current) {
-        const newTimeInMinutes = parseInt(inputRef.current.value, 10);
-        if (isNaN(newTimeInMinutes) || newTimeInMinutes <= 0) {
+        const newTimeInSeconds = parseInt(inputRef.current.value, 10);
+        if (isNaN(newTimeInSeconds) || newTimeInSeconds <= 0) {
           alert('시간을 설정해주세요.');
           return;
         }
-        // Only set time if it's not already running and timeLeft is zero
         if (timeLeft === 0) {
-          const newTimeInSeconds = newTimeInMinutes * 60; // Convert minutes to seconds
           setTimeLeft(newTimeInSeconds);
         }
       }
       setIsRunning(true);
     } else {
-      setIsRunning(false); // Pause the timer
+      setIsRunning(false);
     }
   };
 
@@ -70,7 +68,7 @@ const Timer = () => {
           type='number'
           ref={inputRef}
           className='border rounded px-2 py-1'
-          placeholder='요리시간(분)'
+          placeholder='요리시간(초)'
         />
       </div>
     </div>

@@ -36,7 +36,7 @@ export default function Edit({ params: { id } }: { params: { id: number } }) {
         ],
       };
       updateRecipe(session.user.email, updatedRecipe, id);
-      router.push(`/`);
+      router.push(`/recipe/${id}`);
     }
   };
 

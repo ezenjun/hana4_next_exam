@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Recipe } from '@/types/recipe';
 import { MinusCircleIcon } from '@heroicons/react/16/solid';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, useRef, useEffect } from 'react';
 
 interface RecipeFormProps {
@@ -13,6 +13,8 @@ interface RecipeFormProps {
 }
 
 const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
+  const router = useRouter();
+
   const [title, setTitle] = useState<string>(initialRecipe?.title || '');
   const [tags, setTags] = useState<string[]>(initialRecipe?.tags || []);
   const [ingredients, setIngredients] = useState<string[]>(
@@ -37,9 +39,9 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
       setIsModified(isModified);
     } else {
       setIsModified(
-        title !== '' ||
-          tags.length > 0 ||
-          ingredients.length > 0 ||
+        title !== '' &&
+          tags.length > 0 &&
+          ingredients.length > 0 &&
           steps.length > 0
       );
     }
@@ -121,6 +123,7 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
     <form onSubmit={handleSubmit} className='flex flex-col w-1/2 gap-4 p-6'>
       <Input
         value={title}
+        ref={titleRef}
         onChange={handleTitleChange}
         placeholder='레시피 제목'
         required
@@ -202,8 +205,8 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
         >
           {initialRecipe ? '레시피 수정' : '레시피 저장'}
         </Button>
-        <Button variant='secondary'>
-          <Link href='/'>취소</Link>
+        <Button variant='secondary' onClick={() => router.back()}>
+          취소
         </Button>
       </div>
     </form>

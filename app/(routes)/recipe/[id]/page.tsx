@@ -12,7 +12,7 @@ export default async function RecipeDetailPage({
   }
 
   return (
-    <div className='flex flex-col items-center p-6 w-full overflow-y-scroll no-scrollbar'>
+    <div className='flex flex-col items-center p-6 w-full h-full overflow-y-scroll no-scrollbar'>
       <RecipeDetail userId={session.user.email} recipeId={id} />
     </div>
   );

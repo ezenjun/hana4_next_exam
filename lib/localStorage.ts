@@ -45,3 +45,14 @@ export const updateRecipe = (
 
   localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
 };
+
+export const deleteRecipe = (userId: string, recipeId: number): void => {
+  const recipes = getRecipes(userId);
+
+  if (recipeId >= 0 && recipeId < recipes.length) {
+    recipes.splice(recipeId, 1);
+    localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
+  } else {
+    console.error(`Invalid recipeId: ${recipeId}`);
+  }
+};

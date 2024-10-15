@@ -10,9 +10,7 @@ export default function Create() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const handleSubmit = async (
-    recipeData: Omit<Recipe, 'id' | 'createdAt' | 'versions'>
-  ) => {
+  const handleSubmit = async (recipeData: Omit<Recipe, 'id' | 'versions'>) => {
     if (session?.user?.email) {
       const newRecipe: Recipe = {
         ...recipeData,
