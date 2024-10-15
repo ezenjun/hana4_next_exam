@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
+import SignInOut from './SignInOut';
 
 export default async function Header() {
   const session = await auth();
@@ -13,20 +14,12 @@ export default async function Header() {
         </Link>
       </div>
       <div className='actions space-x-2'>
-        {session?.user ? (
-          <>
-            <Button asChild variant='outline'>
-              <Link href='/recipe/create'>레시피 추가</Link>
-            </Button>
-            <Button>
-              <Link href='/api/auth/signout'>로그아웃</Link>
-            </Button>
-          </>
-        ) : (
-          <Button asChild>
-            <Link href='/api/auth/signin'>로그인</Link>
+        {session?.user && (
+          <Button variant='outline'>
+            <Link href='/recipe/create'>레시피 추가</Link>
           </Button>
         )}
+        <SignInOut />
       </div>
     </header>
   );
