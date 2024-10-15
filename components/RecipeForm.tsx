@@ -28,25 +28,6 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
   const ingredientRef = useRef<HTMLInputElement>(null);
   const stepRef = useRef<HTMLInputElement>(null);
 
-  const checkIfModified = () => {
-    if (initialRecipe) {
-      const isModified =
-        title !== initialRecipe.title ||
-        JSON.stringify(tags) !== JSON.stringify(initialRecipe.tags) ||
-        JSON.stringify(ingredients) !==
-          JSON.stringify(initialRecipe.ingredients) ||
-        JSON.stringify(steps) !== JSON.stringify(initialRecipe.steps);
-      setIsModified(isModified);
-    } else {
-      setIsModified(
-        title !== '' &&
-          tags.length > 0 &&
-          ingredients.length > 0 &&
-          steps.length > 0
-      );
-    }
-  };
-
   const addTag = () => {
     if (tagRef.current && tagRef.current.value.trim()) {
       setTags([...tags, tagRef.current.value.trim()]);
@@ -86,11 +67,6 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
     setIsModified(true);
   };
 
-  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setTitle(e.target.value);
-  //   checkIfModified();
-  // };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title && tags.length && ingredients.length && steps.length) {
@@ -112,8 +88,27 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
   }, [initialRecipe]);
 
   useEffect(() => {
+    const checkIfModified = () => {
+      if (initialRecipe) {
+        const isModified =
+          title !== initialRecipe.title ||
+          JSON.stringify(tags) !== JSON.stringify(initialRecipe.tags) ||
+          JSON.stringify(ingredients) !==
+            JSON.stringify(initialRecipe.ingredients) ||
+          JSON.stringify(steps) !== JSON.stringify(initialRecipe.steps);
+        setIsModified(isModified);
+      } else {
+        setIsModified(
+          title !== '' &&
+            tags.length > 0 &&
+            ingredients.length > 0 &&
+            steps.length > 0
+        );
+      }
+    };
+
     checkIfModified();
-  }, [title, tags, ingredients, steps, initialRecipe, checkIfModified]);
+  }, [title, tags, ingredients, steps, initialRecipe]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
