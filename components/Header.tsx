@@ -15,7 +15,7 @@ export default async function Header() {
       </div>
       <div className='actions space-x-2'>
         {session?.user && (
-          <Button variant='outline'>
+          <Button variant='outline' asChild>
             <Link href='/recipe/create'>레시피 추가</Link>
           </Button>
         )}

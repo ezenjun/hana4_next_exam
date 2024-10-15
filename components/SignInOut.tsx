@@ -12,7 +12,7 @@ export default function SignInOut() {
     );
 
   return (
-    <Button>
+    <Button asChild>
       <Link href='/api/auth/signin'>로그인</Link>
     </Button>
   );

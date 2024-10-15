@@ -3,6 +3,7 @@
 import Timer from '@/components/Timer';
 import { Recipe } from '@/types/recipe';
 import { MinusCircleIcon } from '@heroicons/react/16/solid';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -173,8 +174,9 @@ const RecipeDetail = ({
         <Button
           onClick={handleEdit}
           className='bg-blue-500 text-white px-4 py-2 rounded'
+          asChild
         >
-          수정
+          <Link href={`/recipe/edit/${recipeId}`}>수정</Link>
         </Button>
         <Button
           onClick={handleDelete}
@@ -185,8 +187,9 @@ const RecipeDetail = ({
         <Button
           onClick={handleBack}
           className='bg-gray-500 text-white px-4 py-2 rounded'
+          asChild
         >
-          목록
+          <Link href={`/`}>목록으로</Link>
         </Button>
       </div>
     </div>

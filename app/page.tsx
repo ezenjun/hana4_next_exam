@@ -9,7 +9,7 @@ export default async function HomePage() {
     return (
       <div className='flex flex-col h-full justify-center items-center p-4 gap-3 border-2 text-2xl font-semibold'>
         레시피를 확인하려면 로그인해주세요
-        <Button>
+        <Button asChild>
           <Link href='/api/auth/signin'>로그인하기</Link>
         </Button>
       </div>
