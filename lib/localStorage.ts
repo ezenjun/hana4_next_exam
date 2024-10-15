@@ -56,3 +56,16 @@ export const deleteRecipe = (userId: string, recipeId: number): void => {
     console.error(`Invalid recipeId: ${recipeId}`);
   }
 };
+
+export const removeVersion = (userId: string, recipeId: number, versionIndex: number) => {
+  const recipes = getRecipes(userId);
+  const recipe = recipes[recipeId];
+  
+  if (versionIndex >= 0 && versionIndex < recipe.versions.length) {
+    recipe.versions.splice(versionIndex, 1);
+
+    recipes[recipeId] = recipe;
+    
+    localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
+  }
+};

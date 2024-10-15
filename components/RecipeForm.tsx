@@ -113,7 +113,7 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
 
   useEffect(() => {
     checkIfModified();
-  }, [title, tags, ingredients, steps, initialRecipe]);
+  }, [title, tags, ingredients, steps, initialRecipe, checkIfModified]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);

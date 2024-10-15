@@ -1,9 +1,16 @@
 'use client';
 
 import Timer from '@/components/Timer';
+import { Recipe } from '@/types/recipe';
+import { MinusCircleIcon } from '@heroicons/react/16/solid';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRecipe, getRecipeById, updateRecipe } from '@/lib/localStorage';
+import {
+  deleteRecipe,
+  getRecipeById,
+  removeVersion,
+  updateRecipe,
+} from '@/lib/localStorage';
 import { formatDate } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
@@ -15,9 +22,19 @@ const RecipeDetail = ({
   userId: string;
   recipeId: number;
 }) => {
-  const [recipe, setRecipe] = useState(getRecipeById(userId, recipeId));
+  const [recipe, setRecipe] = useState<Recipe>();
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const fetchRecipe = useCallback(() => {
+    const userRecipe = getRecipeById(userId, recipeId);
+    setRecipe(userRecipe);
+    setIsLoading(false);
+  }, [userId, recipeId]);
+
+  useEffect(() => {
+    fetchRecipe();
+  }, [fetchRecipe]);
 
   const handleEdit = useCallback(() => {
     router.push(`/recipe/edit/${recipeId}`);
@@ -36,26 +53,31 @@ const RecipeDetail = ({
 
   const restoreVersion = useCallback(
     (versionIndex: number) => {
-      const restoredVersion = recipe.versions[versionIndex];
-      const updatedRecipe = {
-        ...recipe,
-        title: restoredVersion.title,
-        tags: restoredVersion.tags,
-        ingredients: restoredVersion.ingredients,
-        steps: restoredVersion.steps,
-      };
-      updateRecipe(userId, updatedRecipe, recipeId);
-      setRecipe(updatedRecipe);
+      if (recipe) {
+        const restoredVersion = recipe.versions[versionIndex];
+        const updatedRecipe = {
+          ...recipe,
+          title: restoredVersion.title,
+          tags: restoredVersion.tags,
+          ingredients: restoredVersion.ingredients,
+          steps: restoredVersion.steps,
+        };
+        updateRecipe(userId, updatedRecipe, recipeId);
+        fetchRecipe();
+      }
     },
-    [recipe, userId, recipeId]
+    [userId, recipeId, recipe, fetchRecipe]
   );
 
-  useEffect(() => {
-    setIsLoading(true);
-    const userRecipe = getRecipeById(userId, recipeId);
-    setRecipe(userRecipe);
-    setIsLoading(false);
-  }, [userId, recipeId]);
+  const deleteVersion = useCallback(
+    (versionIndex: number) => {
+      if (confirm('이 버전을 삭제하시겠습니까?')) {
+        removeVersion(userId, recipeId, versionIndex);
+        fetchRecipe(); // Fetch fresh data from localStorage
+      }
+    },
+    [userId, recipeId, fetchRecipe]
+  );
 
   if (isLoading) {
     return (
@@ -128,13 +150,19 @@ const RecipeDetail = ({
               <p></p>
               <p></p>
             </div>
-            <Button
-              onClick={() => restoreVersion(index)}
-              variant='default'
-              size='sm'
-            >
-              이 버전으로 복원
-            </Button>
+            <div className='flex items-center gap-4'>
+              <Button
+                onClick={() => restoreVersion(index)}
+                variant='default'
+                size='sm'
+              >
+                이 버전으로 복원
+              </Button>
+              <MinusCircleIcon
+                className='h-6 w-6 text-red-500 cursor-pointer'
+                onClick={() => deleteVersion(index)}
+              />
+            </div>
           </div>
         ))
       ) : (
