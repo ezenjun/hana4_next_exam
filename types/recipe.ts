@@ -1,5 +1,4 @@
 export type Recipe = {
-  id: string;
   title: string;
   tags: string[];
   ingredients: string[];
@@ -8,7 +7,6 @@ export type Recipe = {
 };
 
 export type Version = {
-  versionId: string;
   date: Date;
   title: string;
   tags: string[];

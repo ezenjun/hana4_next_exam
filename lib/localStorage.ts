@@ -2,10 +2,16 @@ import { Recipe, Version } from '@/types/recipe';
 
 export const getRecipes = (userId: string): Recipe[] => {
   if (typeof window !== 'undefined') {
-    const recipes = window.localStorage.getItem(`recipes_${userId}`);
+    const recipes = localStorage.getItem(`recipes_${userId}`);
     return recipes ? JSON.parse(recipes) : [];
   }
   return [];
+};
+
+export const getRecipeById = (userId: string, recipeId: number): Recipe => {
+  const recipes = getRecipes(userId);
+  const recipe = recipes[recipeId] as Recipe;
+  return recipe;
 };
 
 export const saveRecipe = (userId: string, recipe: Recipe) => {
@@ -14,28 +20,28 @@ export const saveRecipe = (userId: string, recipe: Recipe) => {
   localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
 };
 
-export const updateRecipe = (userId: string, updatedRecipe: Recipe) => {
+export const updateRecipe = (
+  userId: string,
+  updatedRecipe: Recipe,
+  recipeId: number
+) => {
   const recipes = getRecipes(userId);
-  const index = recipes.findIndex((r) => r.id === updatedRecipe.id);
+  const oldRecipe = recipes[recipeId];
 
-  if (index !== -1) {
-    // 기존 레시피의 버전 기록 추가
-    const currentVersion: Version = {
-      versionId: generateUniqueId(),
-      date: new Date(),
-      title: updatedRecipe.title,
-      tags: [...updatedRecipe.tags],
-      ingredients: [...updatedRecipe.ingredients],
-      steps: [...updatedRecipe.steps],
-    };
-    updatedRecipe.versions.push(currentVersion);
+  // 기존 레시피 데이터를 버전에 추가
+  const newVersion: Version = {
+    date: new Date(),
+    title: oldRecipe.title,
+    tags: oldRecipe.tags,
+    ingredients: oldRecipe.ingredients,
+    steps: oldRecipe.steps,
+  };
 
-    // 레시피 업데이트
-    recipes[index] = updatedRecipe;
-    localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
-  }
-};
+  // 새로운 레시피 데이터로 업데이트
+  recipes[recipeId] = {
+    ...updatedRecipe,
+    versions: [...oldRecipe.versions, newVersion],
+  };
 
-const generateUniqueId = (): string => {
-  return Math.random().toString(36).substr(2, 9);
+  localStorage.setItem(`recipes_${userId}`, JSON.stringify(recipes));
 };

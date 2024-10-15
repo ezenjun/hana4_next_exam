@@ -10,10 +10,11 @@ import Link from 'next/link';
 
 type RecipeCardProps = {
   recipe: Recipe;
+  idx: number;
 };
 
-const RecipeCard = ({ recipe }: RecipeCardProps) => {
-  const { id, title, tags } = recipe;
+const RecipeCard = ({ recipe, idx }: RecipeCardProps) => {
+  const { title, tags } = recipe;
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>
@@ -26,7 +27,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
       </CardContent>
       <CardFooter>
         <Button asChild>
-          <Link href={`/recipe/${id}`}>자세히 보기</Link>
+          <Link href={`/recipe/${idx}`}>자세히 보기</Link>
         </Button>
       </CardFooter>
     </Card>

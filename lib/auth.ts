@@ -40,6 +40,7 @@ export const {
   ],
   callbacks: {
     session({ session }) {
+      console.log('session');
       return session;
     },
   },
