@@ -1,7 +1,14 @@
 import { Button } from '@/components/ui/button';
+import { SessionProvider } from 'next-auth/react';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import SignInOut from './SignInOut';
+
+async function whoAmI() {
+  'use server';
+  const session = await auth();
+  return session?.user?.email || '';
+}
 
 export default async function Header() {
   const session = await auth();
@@ -19,7 +26,9 @@ export default async function Header() {
             <Link href='/recipe/create'>레시피 추가</Link>
           </Button>
         )}
-        <SignInOut />
+        <SessionProvider session={session}>
+          <SignInOut whoami={whoAmI} />
+        </SessionProvider>
       </div>
     </header>
   );

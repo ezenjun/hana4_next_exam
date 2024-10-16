@@ -44,4 +44,8 @@ export const {
       return session;
     },
   },
+  pages: {
+    signIn: '/login',
+  },
+  trustHost: true,
 });

@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
   if (!didLogin) {
     const callbackUrl = encodeURIComponent(req.nextUrl.pathname);
     return NextResponse.redirect(
-      new URL(`/api/auth/signin?callbackUrl=${callbackUrl}`, req.url)
+      new URL(`/login?callbackUrl=${callbackUrl}`, req.url)
     );
   }
 

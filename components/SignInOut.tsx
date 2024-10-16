@@ -1,23 +1,36 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { mySignOut } from '@/actions/myauth';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 
-export default function SignInOut() {
-  const { data: session } = useSession();
-  if (session?.user)
+export default function SignInOut({
+  whoami,
+}: {
+  whoami: () => Promise<string>;
+}) {
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    (async function () {
+      setName(await whoami());
+    })();
+  }, [whoami]);
+
+  if (name)
     return (
       <Button
-        className='font-pretendard'
-        onClick={() => signOut({ callbackUrl: '/' })}
+        onClick={async () => {
+          await mySignOut();
+        }}
       >
         로그아웃
       </Button>
     );
 
   return (
-    <Button asChild className='font-pretendard'>
+    <Button asChild>
       <Link href='/api/auth/signin'>로그인</Link>
     </Button>
   );
