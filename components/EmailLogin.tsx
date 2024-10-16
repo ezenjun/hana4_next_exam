@@ -31,7 +31,12 @@ export default function EmailLogin({
   };
   return (
     <form action={login} className='flex flex-col gap-2'>
-      <Input ref={emailRef} name='email' placeholder='example@example.com' />
+      <Input
+        ref={emailRef}
+        type='email'
+        name='email'
+        placeholder='example@example.com'
+      />
 
       <Input type='password' name='passwd' placeholder='password...' />
 
