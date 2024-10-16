@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import SignInOut from './SignInOut';
@@ -26,9 +26,7 @@ export default async function Header() {
             <Link href='/recipe/create'>레시피 추가</Link>
           </Button>
         )}
-        <SessionProvider session={session}>
-          <SignInOut whoami={whoAmI} />
-        </SessionProvider>
+        <SignInOut whoami={whoAmI} />
       </div>
     </header>
   );
