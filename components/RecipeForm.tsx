@@ -200,7 +200,11 @@ const RecipeForm = ({ initialRecipe, onSubmit }: RecipeFormProps) => {
         >
           {initialRecipe ? '레시피 수정' : '레시피 저장'}
         </Button>
-        <Button variant='secondary' onClick={() => router.back()}>
+        <Button
+          variant='secondary'
+          className='bg-white'
+          onClick={() => router.back()}
+        >
           취소
         </Button>
       </div>

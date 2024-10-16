@@ -7,7 +7,7 @@ export default async function Header() {
   const session = await auth();
 
   return (
-    <header className='flex justify-between items-center p-4 bg-white shadow-md'>
+    <header className='flex justify-between items-center p-4 bg-white shadow-md font-pretendard '>
       <div className='logo'>
         <Link href='/' className='text-xl font-bold'>
           나만의 레시피

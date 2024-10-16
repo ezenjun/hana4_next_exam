@@ -13,6 +13,7 @@ import {
   updateRecipe,
 } from '@/lib/localStorage';
 import { formatDate } from '@/lib/utils';
+import RecipeNotFound from './RecipeNotFound';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 
@@ -85,10 +86,10 @@ const RecipeDetail = ({
       <div className='flex w-full h-full items-center justify-center '>
         <div className='flex flex-wrap justify-around gap-3 items-start '>
           <div className='flex flex-col space-y-3'>
-            <Skeleton className='h-[500px] w-[500px] rounded-xl bg-white' />
+            <Skeleton className='h-[450px] w-[450px] rounded-xl bg-white' />
             <div className='space-y-2'>
-              <Skeleton className='h-4 w-[500px] bg-white ' />
-              <Skeleton className='h-4 w-[250px] bg-white ' />
+              <Skeleton className='h-4 w-[450px] bg-white ' />
+              <Skeleton className='h-4 w-[225px] bg-white ' />
             </div>
           </div>
         </div>
@@ -98,12 +99,19 @@ const RecipeDetail = ({
 
   if (!recipe) {
     return (
-      <div className='text-center text-red-500'>레시피를 찾을 수 없습니다.</div>
+      <div className='flex flex-col items-center justify-center h-screen font-pretendard '>
+        <RecipeNotFound
+          title='레시피를 찾을 수 없습니다'
+          subTitle='요청하신 레시피가 존재하지 않거나 삭제되었을 수 있습니다.'
+          buttonName='목록으로 돌아가기'
+          href='/'
+        />
+      </div>
     );
   }
 
   return (
-    <div className='w-2/3 p-6 bg-white shadow-md rounded-lg'>
+    <div className='container w-1/2 p-6 bg-white shadow-md rounded-lg font-pretendard '>
       <h1 className='text-3xl font-bold mb-4'>{recipe.title}</h1>
       <div className='mb-4'>
         {recipe.tags.map((tag) => (
@@ -136,7 +144,7 @@ const RecipeDetail = ({
         </div>
       ))}
 
-      <h2 className='text-xl font-semibold mt-6'>수정 기록</h2>
+      <h2 className='text-xl font-semibold mt-6 mb-2'>수정 기록</h2>
       {recipe.versions && recipe.versions.length > 0 ? (
         recipe.versions.map((version, index) => (
           <div

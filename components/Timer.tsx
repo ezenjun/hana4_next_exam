@@ -53,7 +53,7 @@ const Timer = () => {
   };
 
   return (
-    <div className='flex flex-col items-center space-y-2'>
+    <div className='flex flex-col items-center space-y-2 font-pretendard'>
       <div className='flex gap-2 items-center'>
         <div className='text-md font-bold'>{formatTime(timeLeft)}</div>
         <Button onClick={toggleTimer} size='sm'>

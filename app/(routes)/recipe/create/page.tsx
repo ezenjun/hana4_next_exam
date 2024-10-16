@@ -23,7 +23,7 @@ export default function Create() {
   };
 
   return (
-    <div className='flex flex-col items-center p-6 w-full overflow-y-scroll no-scrollbar'>
+    <div className='flex flex-col items-center p-6 w-full overflow-y-scroll no-scrollbar font-pretendard'>
       <h2 className='text-2xl'>새 레시피 만들기</h2>
       <RecipeForm onSubmit={handleSubmit} />
     </div>

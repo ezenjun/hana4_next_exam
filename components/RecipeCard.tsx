@@ -16,7 +16,7 @@ type RecipeCardProps = {
 const RecipeCard = ({ recipe, idx }: RecipeCardProps) => {
   const { title, tags } = recipe;
   return (
-    <Card className='w-full max-w-sm'>
+    <Card className='w-full max-w-sm font-pretendard '>
       <CardHeader>
         <h2 className='text-2xl font-bold'>{title}</h2>
       </CardHeader>
